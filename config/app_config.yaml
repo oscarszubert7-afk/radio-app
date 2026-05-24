@@ -1,0 +1,38 @@
+# Radio App Configuration
+
+# Display settings
+display:
+  width: 800
+  height: 600
+  fullscreen: false
+  touchscreen_mode: false
+
+# FM Radio settings
+fm_radio:
+  min_frequency: 88.0
+  max_frequency: 108.0
+  step_size: 0.1
+  default_frequency: 102.4
+
+# Tuning behavior
+tuning:
+  snap_threshold_mhz: 0.3
+  magnetic_snap_enabled: true
+  smooth_tuning: true
+
+# Backend selection
+backend:
+  fm_engine: "rtl_fm"
+  dab_engine: "welle.io"
+
+# Audio settings
+audio:
+  default_device: "default"
+  volume: 0.8
+  mono_mode: false
+
+# File paths
+paths:
+  presets_file: "config/presets.json"
+  config_file: "config/app_config.yaml"
+  cache_dir: ".cache"

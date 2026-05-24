@@ -1,0 +1,22 @@
+[
+  {
+    "name": "BBC Radio 1",
+    "frequency_mhz": 97.7,
+    "mode": "FM"
+  },
+  {
+    "name": "BBC Radio 2",
+    "frequency_mhz": 88.1,
+    "mode": "FM"
+  },
+  {
+    "name": "Capital FM",
+    "frequency_mhz": 105.8,
+    "mode": "FM"
+  },
+  {
+    "name": "Heart Radio",
+    "frequency_mhz": 106.2,
+    "mode": "FM"
+  }
+]
