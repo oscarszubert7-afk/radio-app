@@ -4,7 +4,8 @@
 # This script automates installation of all dependencies and Python packages
 # with intelligent fallbacks for unavailable packages
 
-set -e  # Exit on error
+# IMPORTANT: Don't use 'set -e' - we need to handle optional package failures gracefully
+# set -e
 
 # Colors for output
 RED='\033[0;31m'
@@ -72,7 +73,7 @@ install_with_fallback() {
     else
         print_warning "$description - not found (trying Python alternatives or skipping)"
         SKIPPED_PACKAGES=$((SKIPPED_PACKAGES + 1))
-        return 1
+        return 0  # Return success for optional packages so script continues
     fi
 }
 
@@ -92,15 +93,27 @@ install_rtl_sdr() {
         "RTL-SDR main package" \
         true
     
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
+    
     install_with_fallback \
         "librtlsdr0" "librtlsdr0:armhf" \
         "RTL-SDR runtime library" \
         true
     
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
+    
     install_with_fallback \
         "librtlsdr-dev" "librtlsdr-dev:armhf" \
         "RTL-SDR development headers" \
         true
+    
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
     
     print_success "RTL-SDR tools installed"
 }
@@ -114,15 +127,27 @@ install_audio() {
         "PulseAudio" \
         true
     
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
+    
     install_with_fallback \
         "alsa-utils" "alsa" \
         "ALSA utilities" \
         true
     
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
+    
     install_with_fallback \
         "libasound2-dev" "libasound2-dev:armhf" \
         "ALSA development headers" \
         true
+    
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
     
     print_success "Audio system installed"
 }
@@ -153,15 +178,27 @@ install_qt5() {
         "Qt5 GUI library" \
         true
     
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
+    
     install_with_fallback \
         "libqt5widgets5" "libqt5widgets5:armhf" \
         "Qt5 Widgets library" \
         true
     
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
+    
     install_with_fallback \
         "libqt5core5a" "libqt5core5a:armhf" \
         "Qt5 Core library" \
         true
+    
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
     
     print_success "Qt5 libraries installed"
 }
@@ -175,15 +212,27 @@ install_python_dev() {
         "Python development headers" \
         true
     
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
+    
     install_with_fallback \
         "python3-venv" \
         "Python virtual environment" \
         true
     
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
+    
     install_with_fallback \
         "python3-pip" \
         "Python package manager (pip)" \
         true
+    
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
     
     print_success "Python development tools installed"
 }
